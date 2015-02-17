@@ -5,6 +5,11 @@
   padding: 0.2em 0;
 }
 
+.navigation {
+  margin-bottom: 0;
+  background-color: #149c82;
+}
+
 .thumbnail {
   height: 200px;
 
@@ -14,3 +19,5 @@
 }
 // injector
 // endinjector
+
+@import 'scss/splash';
