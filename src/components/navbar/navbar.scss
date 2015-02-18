@@ -1,0 +1,22 @@
+.navigation {
+  position: fixed;
+  width: 100%;
+}
+
+.sidebar {
+  background-color: #222222;
+  width: 200px;
+  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  padding-top: 50px;
+
+  li {
+    float: none;
+  }
+
+  a {
+    color: #18BC9C;
+    text-decoration: none;
+  }
+}

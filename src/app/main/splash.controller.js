@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('MainCtrl', function () {
+.controller('SplashCtrl', function () {
 });

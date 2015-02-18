@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('pick6Admin')
-  .controller('NavbarCtrl', function () {
+  .controller('NavbarCtrl', function () { 
   });
