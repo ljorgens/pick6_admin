@@ -1,12 +1,24 @@
 'use strict';
 
-angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router'])
+angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'googlechart', 'firebase'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
         templateUrl: 'app/main/splash.html',
         controller: 'SplashCtrl'
+      })
+      .state('sign-in', {
+        url: '/sign-in',
+        templateUrl: 'components/authentication/sign-in.html',
+        controller: 'SignInCtrl',
+        controllerAs: 'signIn'
+      })
+      .state('change-password', {
+        url: '/change-password',
+        templateUrl: 'components/authentication/change-password.html',
+        controller: 'ChangePasswordCtrl',
+        controllerAs: 'changePassword'
       })
       .state('team', {
         // url: '/team',
@@ -16,7 +28,8 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
       .state('team.dashboard', {
         url: '^/dashboard',
         templateUrl: 'components/team/dashboard/dashboard.html',
-        controller: 'DashboardCtrl'
+        controller: 'DashboardCtrl',
+        controllerAs: 'dashboard'
       })
       .state('team.editPoints', {
         url: '^/edit',
@@ -51,4 +64,15 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
 
     $urlRouterProvider.otherwise('/');
   })
+  .run(["$rootScope", "$location", 'AuthenticationService', function($rootScope, $location, AuthenticationService) {
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        if(toState.name !== 'home' || toState.name !== 'sign-in'){
+          if(!AuthenticationService.isLoggedIn()){
+            $location.path('/');
+          }
+        }
+    })
+
+  $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
+}]);
 ;

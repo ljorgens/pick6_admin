@@ -5,6 +5,10 @@
   padding: 0.2em 0;
 }
 
+body {
+  font-family: 'Lato', sans-serif;
+}
+
 .navigation {
   margin-bottom: 0;
   background-color: #149c82;
@@ -17,8 +21,14 @@
     width: 50px;
   }
 }
+
+.content {
+  position: relative;
+  top: 50px;
+}
 // injector
 // endinjector
 
 @import 'scss/splash';
 @import 'scss/navbar';
+@import 'scss/_normalize';

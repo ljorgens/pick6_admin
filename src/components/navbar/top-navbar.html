@@ -1,8 +1,9 @@
 <nav class="navbar navbar-static-top navbar-inverse navigation" ng-controller="NavbarCtrl as navBar">
   <div class="container-fluid">
-        <a class="navbar-brand" href="#">Pick a Player</a>
+        <a class="navbar-brand" href="javascript:void(null)">Pick a Player</a>
         <ul class="nav navbar-nav navbar-right">
-          <a class="navbar-brand" ui-sref="login">Sign In</a>
+          <a class="navbar-brand" ui-sref="sign-in" ng-hide="isLoggedIn();">Sign In</a>
+          <a class="navbar-brand" ng-show="isLoggedIn();">Signed In As: {{userEmail}}</a>
         </ul>
   </div>
 </nav>

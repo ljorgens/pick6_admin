@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav side-nav sidebar">
+<ul class="nav navbar-nav side-nav sidebar" ng-controller="SidebarCtrl as sidebar">
   <li>
     <a ui-sref="team.dashboard">
     <i class="fa fa-dashboard"></i> Team Dashboard
@@ -35,7 +35,7 @@
     </a>
   </li>
   <li>
-    <a rel="nofollow" data-method="delete" ng-click="signOut();">
+    <a href="" ng-click="sidebar.signUserOut();">
     <i class="fa fa-sign-out"></i> Log Out
     </a>
   </li>
