@@ -1,1 +1,59 @@
-coupons.html
+<div id="wrapper">
+  <div class="container sidebar-container">
+    <div class="col-md-12">
+      <h2>All Coupons</h2>
+      <button class="btn btn-default" ng-click="coupons.openAddCoupon()">Add Coupon</button>
+      <table class="table table-striped" st-table="coupons.couponList">
+        <tr>
+          <th>Name</th>
+          <th>Points</th>
+          <th>Available</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        <tr ng-repeat="coupon in coupons.couponList">
+          <td>{{coupon.name}}</td>
+          <td>{{coupon.points}}</td>
+          <td>{{coupon.availableCount}}</td>
+          <td><i class="fa fa-edit"></i></td>
+          <td><i class="glyphicon glyphicon-remove" ng-click="coupons.removeCoupon($index)"></i></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+        <form name="couponForm" ng-submit="form.addCoupon(couponForm.$valid, data)" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Add Coupon</h3>
+        </div>
+        <div class="modal-body">
+              <div class="form-group" ng-class="{true: 'has-error has-feedback'}[couponForm.$submitted && couponForm.name.$invalid]">
+                <label for="name" ng-hide="couponForm.$submitted && couponForm.name.$invalid">Name</label>
+                <label class="control-label" for="name" ng-show="couponForm.$submitted && couponForm.name.$invalid">Name required!</label>
+                <input type="text" id="name" name="name" ng-model="data.name" class="form-control" required />
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="couponForm.$submitted && couponForm.name.$invalid"></span>
+              </div>
+              <div class="form-group" ng-class="{true: 'has-error has-feedback'}[couponForm.$submitted && couponForm.points.$invalid]">
+                <label class="control-label" for="points" ng-show="couponForm.$submitted && couponForm.points.$invalid">Points required!</label>
+                <label for="points" ng-hide="couponForm.$submitted && couponForm.points.$invalid">Points</label>
+                <input type="number" id="points" name="points" ng-model="data.points" class="form-control" required />
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="couponForm.$submitted && couponForm.points.$invalid"></span>
+              </div>
+              <div class="form-group" ng-class="{true: 'has-error has-feedback'}[couponForm.$submitted && couponForm.available.$invalid]">
+                <label class="control-label" for="available" ng-show="couponForm.$submitted && couponForm.available.$invalid">Available required!</label>
+                <label for="available" ng-hide="couponForm.$submitted && couponForm.available.$invalid">Available</label>
+                <input type="number" id="available" name="available" ng-model="data.availableCount" class="form-control" required />
+                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="couponForm.$submitted && couponForm.available.$invalid"></span>
+              </div>
+              <div class="form-group">
+                <div ng-if="couponForm.myEmail.$invalid">There is an error with the field</div>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" ng-click="coupon.addCoupon(couponForm.$valid,data)" value="Add Coupon">
+            <button class="btn btn-warning" ng-click="coupon.cancel()">Cancel</button>
+        </div>
+        </form>
+    </script>

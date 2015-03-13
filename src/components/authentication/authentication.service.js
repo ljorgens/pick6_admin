@@ -1,12 +1,30 @@
 'use strict';
 
 angular.module('pick6Admin')
-.factory('AuthenticationService', function ($firebaseAuth, $q, $state, $rootScope) {
+.factory("Auth", ["$firebaseAuth", 'FBURL', function($firebaseAuth, FBURL) {
+    var ref = new Firebase(FBURL);
+    return $firebaseAuth(ref);
+  }
+])
+.factory('AuthenticationService', function ($firebaseAuth, $q, $state, $rootScope, FBURL) {
 
-  var ref         = new Firebase('https://amber-heat-7.firebaseio.com/'),
+  var ref         = new Firebase(FBURL),
       authObj     = $firebaseAuth(ref),
       _isLoggedIn = false,
       _user       = {};
+
+  var formatEmailForFirebase =  function(email){
+    var key = email.replace('@', '^');
+    if(key.indexOf('.') !== -1){
+      return key.split('.').join('*');
+    }
+    return key;
+  };
+
+  var addNewUserToFB = function(newUser){
+    // var key = formatEmailForFirebase(newUser.email);
+    ref.child('users').child(newUser.uid).set(newUser);
+  };
 
   var service = {
     ref: ref,
@@ -25,8 +43,16 @@ angular.module('pick6Admin')
       var deferred = $q.defer();
       authObj.$authWithPassword({
         email: user.email,
-        password: user.password
+        password: user.password,
+        remember: 'default'
+        //ok
       }).then(function(authData) {
+        addNewUserToFB({
+              email: user.email,
+              uid: authData.uid,
+              token: authData.token,
+              admin: true
+            });
         _isLoggedIn = true;
         // set user email for top navigation bar
         $rootScope.userEmail = authData.password.email;

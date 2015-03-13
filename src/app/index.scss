@@ -26,6 +26,9 @@ body {
   position: relative;
   top: 50px;
 }
+
+// required css for ui.bootstrap
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 // injector
 // endinjector
 

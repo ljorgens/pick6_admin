@@ -1,7 +1,13 @@
 'use strict';
 
-angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'googlechart', 'firebase'])
+angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table'])
+  .constant('FBURL', 'https://amber-heat-7.firebaseio.com')
   .config(function ($stateProvider, $urlRouterProvider) {
+    var authenticateResolve = {
+      "currentAuth": ["Auth", function(Auth) {
+        return Auth.$requireAuth();
+      }]
+    };
     $stateProvider
       .state('home', {
         url: '/',
@@ -23,56 +29,66 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
       .state('team', {
         // url: '/team',
         templateUrl: 'components/team/team.html',
-        controller: 'TeamCtrl'
+        controller: 'TeamCtrl',
+        resolve: authenticateResolve
       })
       .state('team.dashboard', {
         url: '^/dashboard',
         templateUrl: 'components/team/dashboard/dashboard.html',
         controller: 'DashboardCtrl',
-        controllerAs: 'dashboard'
+        controllerAs: 'dashboard',
+        resolve: authenticateResolve
       })
       .state('team.editPoints', {
         url: '^/edit',
         templateUrl: 'components/team/edit-points/edit-points.html',
-        controller: 'EditPointsCtrl'
+        controller: 'EditPointsCtrl',
+        resolve: authenticateResolve
       })
       .state('team.players', {
         url: '^/players',
         templateUrl: 'components/team/players/players.html',
-        controller: 'PlayersCtrl'
+        controller: 'PlayersCtrl',
+        resolve: authenticateResolve
       })
       .state('team.createGame', {
         url: '^/create-game',
         templateUrl: 'components/team/create-game/create-game.html',
-        controller: 'CreateGameCtrl'
+        controller: 'CreateGameCtrl',
+        resolve: authenticateResolve
       })
       .state('team.games', {
         url: '^/games',
         templateUrl: 'components/team/games/games.html',
-        controller: 'GamesCtrl'
+        controller: 'GamesCtrl',
+        resolve: authenticateResolve
       })
       .state('team.badges', {
         url: '^/badges',
         templateUrl: 'components/team/badges/badges.html',
-        controller: 'BadgesCtrl'
+        controller: 'BadgesCtrl',
+        resolve: authenticateResolve
       })
       .state('team.coupons', {
         url: '^/coupons',
         templateUrl: 'components/team/coupons/coupons.html',
-        controller: 'CouponsCtrl'
+        controller: 'CouponsCtrl',
+        controllerAs: 'coupons',
+        resolve: authenticateResolve
       });
 
     $urlRouterProvider.otherwise('/');
   })
-  .run(["$rootScope", "$location", 'AuthenticationService', function($rootScope, $location, AuthenticationService) {
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-        if(toState.name !== 'home' || toState.name !== 'sign-in'){
-          if(!AuthenticationService.isLoggedIn()){
-            $location.path('/');
-          }
-        }
-    })
 
-  $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
+.run(['$rootScope', '$location', function($rootScope, $location) {
+  $rootScope.$on('$routeChangeError', function(event, next, previous, error) {
+  // We can catch the error thrown when the $requireAuth promise is rejected
+  // and redirect the user back to the home page
+  if (error === 'AUTH_REQUIRED') {
+    $location.path('/');
+  }
+});
+
+  // $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
 }]);
-;
+
