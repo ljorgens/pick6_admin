@@ -1,0 +1,8 @@
+<div class="container sidebar-container">
+  <h2>Edit Game:</h2>
+  <form name="addGame.gameForm" ng-submit="editGame.saveGame(addGame.gameForm.$valid)" novalidate>
+    <formly-form model="editGame.formData" fields="editGame.formFields" class="col-md-6">
+      <button type="submit" class="btn btn-primary">Create Game</button>
+    </formly-form>
+  </form>
+</div>

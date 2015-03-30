@@ -27,6 +27,10 @@ body {
   top: 50px;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 // required css for ui.bootstrap
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 // injector

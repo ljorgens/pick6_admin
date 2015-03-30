@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table'])
+angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table', 'formly', 'formlyBootstrap'])
   .constant('FBURL', 'https://amber-heat-7.firebaseio.com')
   .config(function ($stateProvider, $urlRouterProvider) {
     var authenticateResolve = {
@@ -43,6 +43,7 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
         url: '^/edit',
         templateUrl: 'components/team/edit-points/edit-points.html',
         controller: 'EditPointsCtrl',
+        controllerAs: 'EditPoints',
         resolve: authenticateResolve
       })
       .state('team.players', {
@@ -53,14 +54,23 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
       })
       .state('team.createGame', {
         url: '^/create-game',
-        templateUrl: 'components/team/create-game/create-game.html',
+        templateUrl: 'components/team/games/create-game.html',
         controller: 'CreateGameCtrl',
+        controllerAs: 'addGame',
+        resolve: authenticateResolve
+      })
+      .state('team.editGame', {
+        url: '^/edit-game/:gameId',
+        templateUrl: 'components/team/games/create-game.html',
+        controller: 'EditGameCtrl',
+        controllerAs: 'addGame',
         resolve: authenticateResolve
       })
       .state('team.games', {
         url: '^/games',
         templateUrl: 'components/team/games/games.html',
         controller: 'GamesCtrl',
+        controllerAs: 'games',
         resolve: authenticateResolve
       })
       .state('team.badges', {

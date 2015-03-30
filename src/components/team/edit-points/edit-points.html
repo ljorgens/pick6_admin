@@ -5,25 +5,26 @@
 
 <div class="col-md-6">
 
-  <form class="edit_team" id="edit_team_1" action="/teams/1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch"><input type="hidden" name="authenticity_token" value="DMl1iYmQqU+0dD0MUJlGMwRnmJHk8IFdG+N3y3rl89euwmD+OluRxyC+0x6IY4KVueKUjoMIfGOw9Vh0lGAWjA==">
-    <input value="162" type="hidden" name="team[user_id]" id="team_user_id">
+  <form ng-submit="EditPoints.savePoints(EditPoints.data)">
     <div class="form-group">
       <label for="team_points_per_goal">Points per goal</label>
-      <input class="form-control" type="text" value="5" name="team[points_per_goal]" id="team_points_per_goal">
+      <input class="form-control" type="number" ng-model="EditPoints.data.perGoal" name="team[points_per_goal]" id="team_points_per_goal">
     </div>
     <div class="form-group">
       <label for="team_points_per_assist">Points per assist</label>
-      <input class="form-control" type="text" value="3" name="team[points_per_assist]" id="team_points_per_assist">
+      <input class="form-control" type="number" ng-model="EditPoints.data.perAssist" name="team[points_per_assist]" id="team_points_per_assist">
     </div>
     <div class="form-group">
       <label for="team_points_per_good_play">Points per good play</label>
-      <input class="form-control" type="text" value="1" name="team[points_per_good_play]" id="team_points_per_good_play">
+      <input class="form-control" type="number" ng-model="EditPoints.data.perGoodPlay" name="team[points_per_good_play]" id="team_points_per_good_play">
     </div>
     <div class="form-group">
       <label for="team_points_per_checkin">Points per checkin</label>
-      <input class="form-control" type="text" value="10" name="team[points_per_checkin]" id="team_points_per_checkin">
+      <input class="form-control" type="number" ng-model="EditPoints.data.perCheckin" name="team[points_per_checkin]" id="team_points_per_checkin">
     </div>
     <input type="submit" name="commit" value="Update Team" class="btn btn-primary">
+    <div ng-show="EditPoints.alert">
+      <alert ng-hide="close" close="close = true">Update Complete</alert>
+    </div>
 </form></div>
-
 </div>
