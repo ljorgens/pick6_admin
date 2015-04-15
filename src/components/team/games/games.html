@@ -4,6 +4,7 @@
     <table class="table table-striped" st-table="games.gamesList">
       <tr>
         <th>Name</th>
+        <th>Address</th>
         <th>Date</th>
         <th>Time</th>
         <th>Edit</th>
@@ -11,6 +12,7 @@
       </tr>
       <tr ng-repeat="game in games.gamesList">
         <td>{{game.opponent}}</td>
+        <td>{{game.address}}</td>
         <td>{{game.date | date:'fullDate'}}</td>
         <td>{{game.date | date:'shortTime'}}</td>
         <td><i class="fa fa-edit pointer" ng-click="games.editGame(game)"></i></td>

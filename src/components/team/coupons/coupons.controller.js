@@ -33,36 +33,23 @@ angular.module('pick6Admin')
 
   vm.openAddCoupon = function(){
     $modal.open({
-      templateUrl: 'myModalContent.html',
+      templateUrl: 'components/team/coupons/create-coupon.html',
       controller: 'AddCouponCtrl',
       controllerAs: 'coupon'
     })
   }
 
-  vm.editCoupon = function(){
+  vm.editCoupon = function(coupon){
     $modal.open({
-      templateUrl: 'myModalContent.html',
-      controller: 'AddCouponCtrl',
+      templateUrl: 'components/team/coupons/create-coupon.html',
+      controller: 'EditCouponCtrl',
       controllerAs: 'coupon',
-      // resolve: 
+      resolve: {
+        couponToEdit: function() {
+          return coupon;
+        }
+      }
     })
-  }
-
-}]).controller('AddCouponCtrl', ['$firebaseArray', '$modalInstance', 'FBURL', function ($firebaseArray, $modalInstance, FBURL) {
-
-  var list = $firebaseArray(new Firebase(FBURL + '/coupons'));
-  var vm = this;
-
-  vm.addCoupon = function(valid, coupon){
-    if(!valid){
-      return;
-    }
-    list.$add(coupon);
-    $modalInstance.close()
-  }
-
-  vm.cancel = function(){
-    $modalInstance.close()
   }
 
 }]);
