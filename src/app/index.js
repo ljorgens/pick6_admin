@@ -77,6 +77,7 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
         url: '^/badges',
         templateUrl: 'components/team/badges/badges.html',
         controller: 'BadgesCtrl',
+        controllerAs: 'badges',
         resolve: authenticateResolve
       })
       .state('team.coupons', {

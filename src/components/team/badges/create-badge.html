@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Badge:</h3>
+</div>
+<div class="modal-body">
+  <div class="container sidebar-container">
+    <form name="badge.couponForm" ng-submit="badge.submitForm(badge.couponForm.$valid, badge.formData)" novalidate>
+      <formly-form model="badge.formData" fields="badge.formFields" class="col-md-6">
+        <button type="submit" class="btn btn-primary">Update Badge</button>
+        <button class="btn btn-warning" ng-click="badge.dismiss();">Cancel</button>
+      </formly-form>
+    </form>
+  </div>
+</div>
