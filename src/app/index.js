@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table', 'formly', 'formlyBootstrap'])
-  .constant('FBURL', 'https://amber-heat-7.firebaseio.com')
+  .constant('FBURL', 'https://torid-torch-2199.firebaseio.com/')
   .config(function ($stateProvider, $urlRouterProvider) {
     var authenticateResolve = {
       "currentAuth": ["Auth", function(Auth) {

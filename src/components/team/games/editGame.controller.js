@@ -1,15 +1,33 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('EditGameController', ['$firebaseObject', '$modal', 'FBURL', 'gameToEdit', function ($firebaseObject, $modal, FBURL, gameToEdit) {
+.controller('EditGameController', ['$firebaseObject', '$modal', '$modalInstance', 'FBURL', 'gameToEdit', function ($firebaseObject, $modal, $modalInstance, FBURL, gameToEdit) {
 
-  // console.log(gameToEdit)
-  var id = gameToEdit.$id;
-  var game = $firebaseObject(new Firebase(FBURL + '/games/' + id));
-  console.log(game)
-  var vm = this;
+  var vm = this,
+      id = gameToEdit.$id,
+      game = $firebaseObject(new Firebase(FBURL + '/games/' + id));
 
-  vm.formData = game;
+  game.$loaded().then(function(){
+    var gameCopy = angular.copy(game);
+    gameCopy.date = new Date(gameCopy.date);
+    vm.formData = gameCopy;
+  })
+
+  vm.updateGame = function(valid){
+    var updatedGame = $firebaseObject(new Firebase(FBURL + '/games/' + id));
+    updatedGame.date = vm.formData.date.getTime();
+    updatedGame.opponent = vm.formData.opponent;
+    updatedGame.address = vm.formData.address;
+    updatedGame.$save();
+    var gameCopy = angular.copy(updatedGame);
+    gameCopy.date = new Date(gameCopy.date);
+    vm.formData = gameCopy;
+    vm.dismiss();
+  }
+
+  vm.dismiss = function(){
+    $modalInstance.dismiss();
+  }
 
   vm.formFields = [
       {
