@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('EditPointsCtrl', ["$firebaseObject", 'FBURL', function($firebaseObject, FBURL) {
+.controller('EditPointsCtrl', ["$firebaseObject", 'FBURL', 'uploadImage', function($firebaseObject, FBURL, uploadImage) {
     var ref = new Firebase(FBURL + '/pointRules');
 
      var obj = $firebaseObject(ref);
@@ -23,6 +23,8 @@ angular.module('pick6Admin')
       data.$save();
       this.alert = true;
     }
+
+    this.fileSelected = uploadImage.uploadToS3
 
      // For three-way data bindings, bind it to the scope instead
      // obj.$bindTo($scope, "data");

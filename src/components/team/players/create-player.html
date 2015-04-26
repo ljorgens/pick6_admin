@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Player:</h3>
+</div>
+<div class="modal-body">
+  <div class="container sidebar-container">
+    <form name="player.playerForm" ng-submit="player.submitForm(player.playerForm.$valid, player.formData)" novalidate>
+      <formly-form model="player.formData" fields="player.formFields" class="col-md-6">
+        <input type="file" ng-model="player.files" ng-file-select accept="images/*">
+        <button type="submit" class="btn btn-primary">Add Player</button>
+        <button class="btn btn-warning" ng-click="player.dismiss();">Cancel</button>
+        <div ng-show="player.errorMessage">
+          {{player.errorMessage}}
+        </div>
+      </formly-form>
+    </form>
+  </div>
+</div>

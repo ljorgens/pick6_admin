@@ -1,0 +1,23 @@
+<div class="container sidebar-container">
+  <div class="col-md-12">
+    <h2>Current Games</h2>
+    <table class="table table-striped" st-table="games.gamesList">
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      <tr ng-repeat="game in games.gamesList">
+        <td>{{game.opponent}}</td>
+        <td>{{game.address}}</td>
+        <td>{{game.date | date:'fullDate'}}</td>
+        <td>{{game.date | date:'shortTime'}}</td>
+        <td><i class="fa fa-edit pointer" ng-click="games.editGame(game)"></i></td>
+        <td><i class="glyphicon glyphicon-remove pointer" ng-click="games.removeGame($index)"></i></td>
+      </tr>
+    </table>
+  </div>
+</div>

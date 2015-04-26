@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table', 'formly', 'formlyBootstrap'])
+angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'googlechart', 'firebase', 'smart-table', 'formly', 'formlyBootstrap', 'angularFileUpload'])
   .constant('FBURL', 'https://torid-torch-2199.firebaseio.com/')
   .config(function ($stateProvider, $urlRouterProvider) {
     var authenticateResolve = {
@@ -50,6 +50,7 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
         url: '^/players',
         templateUrl: 'components/team/players/players.html',
         controller: 'PlayersCtrl',
+        controllerAs: 'players',
         resolve: authenticateResolve
       })
       .state('team.createGame', {
@@ -73,6 +74,13 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
         controllerAs: 'games',
         resolve: authenticateResolve
       })
+      .state('team.current-game', {
+        url: '^/current-game',
+        templateUrl: 'components/team/current-game/current-game.html',
+        controller: 'CurrentGameCtrl',
+        controllerAs: 'current-game',
+        resolve: authenticateResolve
+      })
       .state('team.badges', {
         url: '^/badges',
         templateUrl: 'components/team/badges/badges.html',
@@ -91,14 +99,19 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
     $urlRouterProvider.otherwise('/');
   })
 
-.run(['$rootScope', '$location', function($rootScope, $location) {
+.run(['$rootScope', '$location', 'formlyConfig', function($rootScope, $location, formlyConfig) {
   $rootScope.$on('$routeChangeError', function(event, next, previous, error) {
-  // We can catch the error thrown when the $requireAuth promise is rejected
-  // and redirect the user back to the home page
-  if (error === 'AUTH_REQUIRED') {
-    $location.path('/');
-  }
-});
+    // We can catch the error thrown when the $requireAuth promise is rejected
+    // and redirect the user back to the home page
+    if (error === 'AUTH_REQUIRED') {
+      $location.path('/');
+    }
+  });
+
+  formlyConfig.setType({
+    name: 'file',
+    template: '<div><label for="fileInput">{{options.templateOptions.label}}ok {{model}}</label><input type="file" ng-model="model[options.key]" id="fileInput" /></div>'
+  });
 
   // $rootScope.isLoggedIn = AuthenticationService.isLoggedIn;
 }]);
