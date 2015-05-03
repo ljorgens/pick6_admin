@@ -1,32 +1,34 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('CurrentGameCtrl', ['$firebaseArray', '$modal', 'FBURL', function ($firebaseArray, $modal, FBURL) {
+.controller('CurrentGameCtrl', ['$firebaseObject', '$firebaseArray', '$modal', 'FBURL', function ($firebaseObject, $firebaseArray, $modal, FBURL) {
 
-  var games = $firebaseArray(new Firebase(FBURL + '/games'));
-  var vm = this;
+  var vm = this,
+      game = $firebaseObject(new Firebase(FBURL + '/currentGame')),
+      players = $firebaseArray(new Firebase(FBURL + '/players'));
 
-  vm.gamesList = games;
+  vm.playerList = players;
+  vm.game = game;
 
-  vm.removeGame = function(index){
-    var item = games[index];
-    games.$remove(item).then(function(ref) {
-      ref.key() === item.$id; // true
-    });
+  vm.removePlayer = function(player){
+    for(var i = 0; i < game.currentPlayers.length; i++){
+      if(game.currentPlayers[i].number === player.number){
+        game.currentPlayers.splice(i,1);
+        game.$save()
+        return;
+      }
+    }
   }
 
-  vm.editGame = function(game){
-    console.log(game);
-    $modal.open({
-      templateUrl: 'components/team/games/editGameTemplate.html',
-      controller: 'EditGameController',
-      controllerAs: 'editGame',
-      resolve: {
-        gameToEdit: function() {
-          return game;
-        }
+  vm.addPlayer = function(player){
+    game.currentPlayers = game.currentPlayers || [];
+    for(var i = 0; i < game.currentPlayers.length; i++){
+      if(game.currentPlayers[i].number === player.number){
+        return;
       }
-    })
+    }
+    game.currentPlayers.push(player)
+    game.$save()
   }
 
 }]);
