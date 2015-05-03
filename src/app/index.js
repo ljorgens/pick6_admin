@@ -78,7 +78,7 @@ angular.module('pick6Admin', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize',
         url: '^/current-game',
         templateUrl: 'components/team/current-game/current-game.html',
         controller: 'CurrentGameCtrl',
-        controllerAs: 'current-game',
+        controllerAs: 'currentGame',
         resolve: authenticateResolve
       })
       .state('team.badges', {

@@ -1,23 +1,33 @@
 <div class="container sidebar-container">
   <div class="col-md-12">
-    <h2>Current Games</h2>
-    <table class="table table-striped" st-table="games.gamesList">
-      <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-      <tr ng-repeat="game in games.gamesList">
-        <td>{{game.opponent}}</td>
-        <td>{{game.address}}</td>
-        <td>{{game.date | date:'fullDate'}}</td>
-        <td>{{game.date | date:'shortTime'}}</td>
-        <td><i class="fa fa-edit pointer" ng-click="games.editGame(game)"></i></td>
-        <td><i class="glyphicon glyphicon-remove pointer" ng-click="games.removeGame($index)"></i></td>
-      </tr>
-    </table>
+    <h2>Current Game</h2>
+    <h1>VS. {{currentGame.game.opponent}}</h1>
+    <p>{{currentGame.game.date | date:'medium'}}</p>
+    <h2>Current Players</h2>
+    <span ng-hide="currentGame.game.currentPlayers.length">None</span>
+    <div class="media" ng-repeat="player in currentGame.game.currentPlayers">
+    <div class="media-left media-middle">
+      <a href="#">
+        <img class="media-object" ng-src="{{player.url}}" alt="...">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{player.name}}</h4>
+      {{player.number}}<br />
+      <button ng-click="currentGame.removePlayer(player)">Remove</button>
+    </div>
+  </div>
+  <h2>All Players</h2>
+    <div class="media" ng-repeat="player in currentGame.playerList">
+    <div class="media-left media-middle">
+      <a href="#">
+        <img class="media-object" ng-src="{{player.url}}" alt="...">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{player.name}}</h4>
+      {{player.number}}<br />
+      <button ng-click="currentGame.addPlayer(player)">Add</button>
+    </div>
   </div>
 </div>
