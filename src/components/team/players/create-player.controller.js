@@ -11,18 +11,17 @@ angular.module('pick6Admin')
       return;
     }
     //uploadImage.uploadToS3()
-    console.log(vm.files)
     if(!vm.files) {
       vm.errorMessage = 'Please select a photo to upload';
       return;
     }
     uploadImage.uploadToS3(vm.files,'players').then(function(data){
-      console.log(data);
+      // console.log(data);
       player.url = data.savedUrl;
       list.$add(player);
       $modalInstance.close()
     },function(err){
-      console.log('error',err);
+      // console.log('error',err);
     });
     return;
   }

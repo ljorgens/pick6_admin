@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('CreateGameCtrl', ["$firebaseArray", 'FBURL', function($firebaseArray, FBURL) {
+.controller('CreateGameCtrl', ["$firebaseArray", 'FBURL', 'uploadImage', function($firebaseArray, FBURL, uploadImage) {
     var ref = new Firebase(FBURL + '/games');
     var vm = this;
 
@@ -13,11 +13,16 @@ angular.module('pick6Admin')
       if(!valid){
         return;
       }
-      var newGameData = angular.copy(vm.formData);
-      newGameData.date = vm.formData.date.getTime();
-      console.log(newGameData)
-      obj.$add(newGameData);
-      vm.gameAdded = true;
+      uploadImage.uploadToS3(vm.files,'games').then(function(data){
+        
+        var newGameData = angular.copy(vm.formData);
+        newGameData.date = vm.formData.date.getTime();
+        newGameData.url = data.savedUrl;
+        obj.$add(newGameData);
+        vm.gameAdded = true;
+      },function(err){
+        // console.log('error',err);
+      });
     }
 
     vm.formFields = [
