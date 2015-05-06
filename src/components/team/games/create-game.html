@@ -2,7 +2,10 @@
   <h2>Create New Game:</h2>
   <form name="addGame.gameForm" ng-submit="addGame.saveGame(addGame.gameForm.$valid, addGame.files)" novalidate>
     <formly-form model="addGame.formData" fields="addGame.formFields" class="col-md-6">
-    <input type="file" ng-model="addGame.files" ng-file-select accept="images/*">
+    <div>
+    <label for="logo">Opponent Logo</label>
+    <input type="file" name="logo" ng-model="addGame.files" ng-file-select accept="images/*">
+    </div>
       <button type="submit" class="btn btn-primary">Create Game</button>
     </formly-form>
   </form>
