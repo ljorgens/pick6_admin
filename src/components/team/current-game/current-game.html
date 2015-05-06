@@ -3,31 +3,124 @@
     <h2>Current Game</h2>
     <h1>VS. {{currentGame.game.opponent}}</h1>
     <p>{{currentGame.game.date | date:'medium'}}</p>
-    <h2>Current Players</h2>
-    <span ng-hide="currentGame.game.currentPlayers.length">None</span>
-    <div class="media" ng-repeat="player in currentGame.game.currentPlayers">
-    <div class="media-left media-middle">
-      <a href="#">
-        <img class="media-object" ng-src="{{player.url}}" alt="...">
-      </a>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">{{player.name}}</h4>
-      {{player.number}}<br />
-      <button ng-click="currentGame.removePlayer(player)">Remove</button>
-    </div>
-  </div>
-  <h2>All Players</h2>
-    <div class="media" ng-repeat="player in currentGame.playerList">
-    <div class="media-left media-middle">
-      <a href="#">
-        <img class="media-object" ng-src="{{player.url}}" alt="...">
-      </a>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">{{player.name}}</h4>
-      {{player.number}}<br />
-      <button ng-click="currentGame.addPlayer(player)">Add</button>
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Current Players</h2>
+        <span ng-hide="currentGame.game.currentPlayers.length">None</span>
+        <div class="media" ng-repeat="player in currentGame.game.currentPlayers">
+        <div class="media-left media-middle">
+          <a href="#">
+            <img class="media-object" ng-src="{{player.url}}" height="105px" width="173px">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">{{player.name}}</h4>
+          {{player.number}}<br />
+          <button ng-click="currentGame.removePlayer(player)">Remove</button>
+        </div>
+        </div>
+        <h2>All Players</h2>
+          <div class="media" ng-repeat="player in currentGame.playerList">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" ng-src="{{player.url}}" height="105px" width="173px">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{player.name}}</h4>
+            {{player.number}}<br />
+            <button ng-click="currentGame.addPlayer(player)">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h2>Current Twitter Snippets</h2>
+        <hr>
+        <ul>
+          <li ng-repeat="snippet in currentGame.game.twitterSnippets">{{snippet}}<i class="glyphicon glyphicon-remove" ng-click="currentGame.removeSnippet($index);"></i></li>
+        </ul>
+        <h2>Add a Twitter Snippet</h2>
+        <form name="twitterSnippet">
+        <p><input type="text" ng-model="currentGame.twitterSnippet"></p>
+        <input type="submit" name="commit" value="Create Twitter Snippet" class="btn btn-primary" ng-click="currentGame.addTwitterSnippet(currentGame.twitterSnippet);">
+        </form>
+        <h2>Current Badges</h2>
+        <hr>
+        <ul>
+          <li ng-repeat="badge in currentGame.game.currentBadges">{{badge.name}}<i class="glyphicon glyphicon-remove" ng-click="currentGame.removeBadge(badge);"></i></li>
+        </ul>
+        <h2>Add a Badge</h2>
+        <!-- <form name="badges"> -->
+        <select ng-options="badge.name for badge in currentGame.badges" ng-model="selectedBadge">
+        <hr>
+        <input type="submit" name="commit" value="Create Game Badge" class="btn btn-primary" ng-click="currentGame.addCurrentBadge(selectedBadge);">
+        <!-- </form> -->
+      </div>
     </div>
   </div>
 </div>
+
+<!-- 
+<div class="row picked-players">
+          <div class="col-md-3">
+            <div class="player-image img-wrap">
+              <div class="delete-button">
+                <a rel="nofollow" data-method="delete" href="/teams/1/games/3/availabilities/148">
+                  <i class="glyphicon glyphicon-remove"></i>
+</a>              </div>
+              <img class="player-image-add" src="http://s3.amazonaws.com/pick6/players/avatars/000/000/019/thumb/7-13-17.jpg?1423872642" alt="7 13 17">
+            </div>
+            <div class="player-name">
+               
+            </div>
+          </div>
+          <div class="col-md-3">
+          Goals:<br>
+            <div class="col-md-6 total-points">
+              1
+              </div>
+              <div class="col-md-6">
+              <a rel="nofollow" data-method="post" href="/teams/1/players/19/games/3/goals">
+                <div class="up-point">
+                  <i class="fa fa-caret-up fa-2x"></i>
+                </div>
+</a>              <a rel="nofollow" data-method="delete" href="/teams/1/players/19/games/3/goals/148">
+                <div class="down-point">
+                  <i class="fa fa-caret-down fa-2x"></i>
+                </div>
+</a>            </div>
+          </div>
+          <div class="col-md-3">
+          Assists:<br>
+            <div class="col-md-6 total-points">
+              1
+            </div>
+            <div class="col-md-6">
+              <a rel="nofollow" data-method="post" href="/teams/1/players/19/games/3/assists">
+              <div class="up-point">
+                <i class="fa fa-caret-up fa-2x"></i>
+              </div>
+</a>              <a rel="nofollow" data-method="delete" href="/teams/1/players/19/games/3/assists/105">
+              <div class="down-point">
+                <i class="fa fa-caret-down fa-2x"></i>
+              </div>
+</a>            </div>
+          </div>
+          <div class="col-md-3">
+          Good Plays:<br>
+            <div class="col-md-6 total-points">
+              1
+              </div>
+              <div class="col-md-6">
+              <a rel="nofollow" data-method="post" href="/teams/1/players/19/games/3/good_plays">
+                <div class="up-point">
+                  <i class="fa fa-caret-up fa-2x"></i>
+                </div>
+</a>              <a rel="nofollow" data-method="delete" href="/teams/1/players/19/games/3/good_plays/499">
+                <div class="down-point">
+                  <i class="fa fa-caret-down fa-2x"></i>
+                </div>
+</a>            </div>
+          </div>
+          <p>Total Points: </p>
+        </div> -->
