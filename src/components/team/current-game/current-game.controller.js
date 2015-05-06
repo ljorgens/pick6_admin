@@ -29,6 +29,10 @@ angular.module('pick6Admin')
         return;
       }
     }
+    // initialize goals, assits, and good plays
+    player.goals = 0;
+    player.assists = 0;
+    player.goodPlays = 0;
     game.currentPlayers.push(player)
     game.$save()
   }
@@ -69,6 +73,36 @@ angular.module('pick6Admin')
         return;
       }
     }
+  }
+
+  vm.upGoals = function(player){
+    player.goals++;
+    game.$save();
+  }
+
+  vm.upAssists = function(player){
+    player.assists++;
+    game.$save();
+  }
+
+  vm.upGoodPlays = function(player){
+    player.goodPlays++;
+    game.$save();
+  }
+
+  vm.downGoals = function(player){
+    player.goals--;
+    game.$save();
+  }
+
+  vm.downAssists = function(player){
+    player.assists--;
+    game.$save();
+  }
+
+  vm.downGoodPlays = function(player){
+    player.goodPlays--;
+    game.$save();
   }
 
 }]);
