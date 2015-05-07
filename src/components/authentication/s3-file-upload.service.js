@@ -30,7 +30,7 @@ angular.module('pick6Admin')
       })
       .then(function(data){
         //the link where photo can be accessed
-        console.log(data)
+        // console.log(data)
         var filelink ='https://s3-us-west-2.amazonaws.com/pick6-admin/' + folderName + '/' + fileName;
         deferred.resolve({savedUrl: filelink});
         //function that sends file link to database

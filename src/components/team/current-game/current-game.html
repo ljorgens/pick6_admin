@@ -4,20 +4,36 @@
     <h1>VS. {{currentGame.game.opponent}}</h1>
     <p>{{currentGame.game.date | date:'medium'}}</p>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-9">
         <h2>Current Players</h2>
-        <span ng-hide="currentGame.game.currentPlayers.length">None</span>
-        <div class="media" ng-repeat="player in currentGame.game.currentPlayers">
-        <div class="media-left media-middle">
-          <a href="#">
-            <img class="media-object" ng-src="{{player.url}}" height="105px" width="173px">
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">{{player.name}}</h4>
-          {{player.number}}<br />
-          <button ng-click="currentGame.removePlayer(player)">Remove</button>
-        </div>
+        <div class="row">
+            <span ng-hide="currentGame.game.currentPlayers.length">None</span>
+            <div class="media row" ng-repeat="player in currentGame.game.currentPlayers">
+           <div class="col-md-6">
+              <div class="media-left media-middle">
+                <a href="#">
+                  <img class="media-object" ng-src="{{player.url}}" height="105px" width="173px">
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">{{player.name}}</h4>
+                {{player.number}}<br />
+                <button ng-click="currentGame.removePlayer(player)">Remove</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+              <p>Goals</p>
+              <i class="fa fa-caret-up fa-2x" ng-click="currentGame.upGoals(player)"></i><p>{{player.goals}}</p><i class="fa fa-caret-down fa-2x" ng-click="currentGame.downGoals(player)"></i>
+            </div>
+            <div class="col-md-2">
+              <p>Assits</p>
+              <i class="fa fa-caret-up fa-2x" ng-click="currentGame.upAssists(player)"></i><p>{{player.assists}}</p><i class="fa fa-caret-down fa-2x" ng-click="currentGame.downAssists(player)"></i>
+            </div>
+            <div class="col-md-2">
+              <p>Good Plays</p>
+              <i class="fa fa-caret-up fa-2x" ng-click="currentGame.upGoodPlays(player)"></i><p>{{player.goodPlays}}</p><i class="fa fa-caret-down fa-2x" ng-click="currentGame.downGoodPlays(player)"></i>
+            </div>
+          </div>
         </div>
         <h2>All Players</h2>
           <div class="media" ng-repeat="player in currentGame.playerList">
@@ -33,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <h2>Current Twitter Snippets</h2>
         <hr>
         <ul>
@@ -59,8 +75,8 @@
     </div>
   </div>
 </div>
-
 <!-- 
+
 <div class="row picked-players">
           <div class="col-md-3">
             <div class="player-image img-wrap">

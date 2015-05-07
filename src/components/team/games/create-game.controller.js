@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('CreateGameCtrl', ["$firebaseArray", 'FBURL', 'uploadImage', function($firebaseArray, FBURL, uploadImage) {
-    var ref = new Firebase(FBURL + '/games');
+.controller('CreateGameCtrl', ['$firebaseArray', '$firebaseObject', '$state', 'FBURL', 'uploadImage', function($firebaseArray, $firebaseObject, $state, FBURL, uploadImage) {
+    var ref = new Firebase(FBURL + '/games'),
+        currentGame = $firebaseObject(new Firebase(FBURL + '/currentGame'));
     var vm = this;
 
     var obj = $firebaseArray(ref);
@@ -19,10 +20,20 @@ angular.module('pick6Admin')
         newGameData.date = vm.formData.date.getTime();
         newGameData.url = data.savedUrl;
         obj.$add(newGameData);
+        setCurrentGame(newGameData);
         vm.gameAdded = true;
+        $state.go('team.current-game');
       },function(err){
         // console.log('error',err);
       });
+    }
+
+    function setCurrentGame(game){
+      currentGame.date = game.date;
+      currentGame.url = game.url;
+      currentGame.opponent = game.opponent;
+      currentGame.address = game.address;
+      currentGame.$save();
     }
 
     vm.formFields = [
