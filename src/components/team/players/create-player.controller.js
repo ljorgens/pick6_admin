@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('AddPlayerCtrl', ['$firebaseArray', '$modalInstance', 'FBURL', 'uploadImage', function ($firebaseArray, $modalInstance, FBURL, uploadImage) {
+.controller('AddPlayerCtrl', ['$firebaseArray', '$modalInstance', 'FBURL', 'uploadImage', function($firebaseArray, $modalInstance, FBURL, uploadImage) {
 
   var vm = this,
       list = $firebaseArray(new Firebase(FBURL + '/players'));
