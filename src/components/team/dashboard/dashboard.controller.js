@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('DashboardCtrl', function () {
-  this.fanAttendance = {
+.controller('DashboardCtrl', function (wnbaApiService) {
+
+  var vm = this;
+
+  vm.fanAttendance = {
     data: [
         ['Date', 'Attendace'],
         ['01-18-2015', 50],
@@ -49,4 +52,9 @@ angular.module('pick6Admin')
       }
     }
   };
+
+  vm.getSchedule = function(){
+    wnbaApiService.getScheduleFeed();
+  }
+
 });

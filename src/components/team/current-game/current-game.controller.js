@@ -6,6 +6,8 @@ angular.module('pick6Admin')
   var vm = this,
       game = $firebaseObject(new Firebase(FBURL + '/currentGame')),
       players = $firebaseArray(new Firebase(FBURL + '/players')),
+      users = $firebaseArray(new Firebase(FBURL + '/users')),
+      pointRules = $firebaseArray(new Firebase(FBURL + '/pointRules')),
       badges = $firebaseArray(new Firebase(FBURL + '/badges'));
 
   vm.playerList = players;
@@ -33,6 +35,14 @@ angular.module('pick6Admin')
     player.goals = 0;
     player.assists = 0;
     player.goodPlays = 0;
+
+    // TODO: remove once Manuel wires up current players on mobile app
+
+    player.currentUsers = [];
+    player.currentUsers.push('simplelogin:10');
+    player.currentUsers.push('simplelogin:14');
+
+
     game.currentPlayers.push(player)
     game.$save()
   }
@@ -77,16 +87,19 @@ angular.module('pick6Admin')
 
   vm.upGoals = function(player){
     player.goals++;
+    assignPointsToUsers(player,'perGoal');
     game.$save();
   }
 
   vm.upAssists = function(player){
     player.assists++;
+    assignPointsToUsers(player,'perAssist');
     game.$save();
   }
 
   vm.upGoodPlays = function(player){
     player.goodPlays++;
+    assignPointsToUsers(player,'perGoodPlay');
     game.$save();
   }
 
@@ -103,6 +116,18 @@ angular.module('pick6Admin')
   vm.downGoodPlays = function(player){
     player.goodPlays--;
     game.$save();
+  }
+
+  function assignPointsToUsers(player, typeOfPoint){
+    for(var j = 0; j < users.length; j++){
+      for(var i = 0; i < player.currentUsers.length; i++){
+        if(users[j].uid === player.currentUsers[i]){
+          users[j].points = users[j].points + pointRules.$getRecord(typeOfPoint).$value;
+          console.log(pointRules.$getRecord(typeOfPoint))
+          users.$save(users[j]);
+        }
+      }
+    }
   }
 
 }]);
