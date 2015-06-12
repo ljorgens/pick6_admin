@@ -33,6 +33,7 @@ angular.module('pick6Admin')
       currentGame.url = game.url;
       currentGame.opponent = game.opponent;
       currentGame.address = game.address;
+      currentGame.currentPlayers = [];
       currentGame.$save();
     }
 
