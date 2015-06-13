@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pick6Admin')
-.controller('CreateGameCtrl', ['$firebaseArray', '$firebaseObject', '$state', 'FBURL', 'uploadImage', function($firebaseArray, $firebaseObject, $state, FBURL, uploadImage) {
+.controller('CreateGameCtrl', ['$firebaseArray', '$firebaseObject', '$state', 'FBURL', 'uploadImage', '$http', function($firebaseArray, $firebaseObject, $state, FBURL, uploadImage, $http) {
     var ref = new Firebase(FBURL + '/games'),
         currentGame = $firebaseObject(new Firebase(FBURL + '/currentGame'));
     var vm = this;
@@ -29,12 +29,17 @@ angular.module('pick6Admin')
     }
 
     function setCurrentGame(game){
+      var adrs = game.address.split(' ').join('+');
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + adrs + '&key=AIzaSyBS2Ld31MCU5IRtGkzG5OhQ_I4L7TDtrww').then(function(data){
       currentGame.date = game.date;
       currentGame.url = game.url;
       currentGame.opponent = game.opponent;
       currentGame.address = game.address;
+      currentGame.lat = data.data.results[0].geometry.location.lat;
+      currentGame.lng = data.data.results[0].geometry.location.lng;
       currentGame.currentPlayers = [];
       currentGame.$save();
+      })
     }
 
     vm.formFields = [
